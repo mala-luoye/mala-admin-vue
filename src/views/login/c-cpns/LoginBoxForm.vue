@@ -6,7 +6,7 @@
       :style="{ width: '320px' }"
       @submit="handleSubmit"
     >
-      <FormItem field="username">
+      <FormItem field="username" :rules="[{ required: true }]">
         <Input
           v-model="form.username"
           placeholder="用户名"
@@ -17,8 +17,8 @@
           </template>
         </Input>
       </FormItem>
-      <FormItem field="password">
-        <Input
+      <FormItem field="password" :rules="[{ required: true }]">
+        <InputPassword
           v-model="form.password"
           placeholder="密码"
           :style="{ width: '320px' }"
@@ -26,7 +26,7 @@
           <template #prefix>
             <IconLock />
           </template>
-        </Input>
+        </InputPassword>
       </FormItem>
       <FormItem :style="{ marginTop: '15px' }">
         <Button
@@ -43,7 +43,13 @@
 
 <script lang="ts" setup>
 import { ref, reactive } from "vue"
-import { Form, FormItem, Button, Input } from "@arco-design/web-vue"
+import {
+  Form,
+  FormItem,
+  Button,
+  Input,
+  InputPassword
+} from "@arco-design/web-vue"
 import { IconUser, IconLock } from "@arco-design/web-vue/es/icon"
 // 表单ref对象
 const formRef = ref<InstanceType<typeof Form> | null>(null)
