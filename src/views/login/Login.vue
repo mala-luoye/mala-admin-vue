@@ -8,7 +8,23 @@
 </template>
 
 <script lang="ts" setup>
+import { onMounted, onBeforeUnmount } from "vue"
+import { Notification } from "@arco-design/web-vue"
 import LoginBoxForm from "./c-cpns/LoginBoxForm.vue"
+
+onMounted(() => {
+  Notification.info({
+    title: "欢迎使用后台管理系统模板",
+    content: "账号 admin(管理员) 其他(游客) 密码随意",
+    showIcon: false,
+    duration: 0,
+    closable: true
+  })
+})
+
+onBeforeUnmount(() => {
+  Notification.clear()
+})
 </script>
 
 <style lang="less" scoped>

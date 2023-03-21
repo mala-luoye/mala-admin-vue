@@ -32,10 +32,11 @@
         <Button
           html-type="submit"
           type="primary"
-          :style="{ marginRight: '24px' }"
+          :style="{ width: '80px', marginRight: '24px' }"
+          :loading="loading"
           >登录</Button
         >
-        <Button @click="handleReset">重置</Button>
+        <Button @click="handleReset" :style="{ width: '80px' }">重置</Button>
       </FormItem>
     </Form>
   </div>
@@ -43,24 +44,46 @@
 
 <script lang="ts" setup>
 import { ref, reactive } from "vue"
+import { useRouter } from "vue-router"
 import {
   Form,
   FormItem,
   Button,
   Input,
-  InputPassword
+  InputPassword,
+  Message
 } from "@arco-design/web-vue"
 import { IconUser, IconLock } from "@arco-design/web-vue/es/icon"
+import { cache } from "@/utils"
+const router = useRouter()
+const loading = ref(false)
 // 表单ref对象
 const formRef = ref<InstanceType<typeof Form> | null>(null)
 const form = reactive({
   username: "",
-  password: "",
-  isRead: false
+  password: ""
 })
 // 提交表单
-const handleSubmit = (data: any) => {
-  console.log(data)
+const handleSubmit = async () => {
+  // 验证表单
+  const res = await formRef.value?.validate()
+  if (res) return
+  // 设置loading效果
+  loading.value = true
+  const { username, password } = form
+  // 权限处理
+  switch (username) {
+    case "admin":
+      cache.setCache("token", { username, auth: 1 })
+      break
+    default:
+      cache.setCache("token", { username, auth: 2 })
+  }
+  // 路由跳转
+  setTimeout(() => {
+    Message.success("登录成功")
+    router.push("/home")
+  }, 2000)
 }
 // 重置表单
 const handleReset = () => {
