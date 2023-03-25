@@ -15,6 +15,7 @@
     "vue-router": "^4.1.6"
   },
   "devDependencies": {
+    "@arco-plugins/vite-vue": "^1.4.5",
     "@types/node": "^18.15.3",
     "@vitejs/plugin-vue": "^4.1.0",
     "consola": "^2.15.3",

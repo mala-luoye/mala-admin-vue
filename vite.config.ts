@@ -1,7 +1,7 @@
 import { defineConfig } from "vite"
 import vue from "@vitejs/plugin-vue"
 import path from "path"
-// import { createStyleImportPlugin } from "vite-plugin-style-import"
+import { vitePluginForArco } from "@arco-plugins/vite-vue"
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -10,21 +10,5 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src")
     }
   },
-  plugins: [
-    vue()
-    // createStyleImportPlugin({
-    //   libs: [
-    //     {
-    //       libraryName: "@arco-design/web-vue",
-    //       esModule: true,
-    //       resolveStyle: (name) => {
-    //         // css
-    //         return `@arco-design/web-vue/es/${name}/style/css.js`
-    //         // less
-    //         return `@arco-design/web-vue/es/${name}/style/index.js`
-    //       }
-    //     }
-    //   ]
-    // })
-  ]
+  plugins: [vue(), vitePluginForArco()]
 })
